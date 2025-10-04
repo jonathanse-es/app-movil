@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Notas - App Móvil</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        .notes-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .notes-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .notes-header h1 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+        }
+        
+        .notes-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .notes-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .notes-list {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .btn-save {
+            background: #10b981;
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+        
+        .btn-save:hover {
+            background: #059669;
+        }
+        
+        .notes-list h3 {
+            color: #2563eb;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .note-item {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #2563eb;
+        }
+
+        .note-actions {
+            margin-top: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-edit, .btn-delete {
+            padding: 0.25rem 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: background-color 0.2s;
+        }
+
+        .btn-edit {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background-color: #2563eb;
+        }
+
+        .btn-delete {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background-color: #dc2626;
+        }
+        
+        .note-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .note-client {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .note-date {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        
+        .note-type {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .note-type.consulta {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .note-type.servicio {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .note-type.follow-up {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .note-content {
+            color: #374151;
+            line-height: 1.5;
+        }
+        
+        .empty-state {
+            text-align: center;
+            color: #6b7280;
+            padding: 2rem;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #d1d5db;
+        }
+        
+        @media (max-width: 768px) {
+            .notes-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .notes-container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2><i class="fas fa-mobile-alt"></i> App Móvil</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/notas.html" class="nav-link active">Notas de Clientes</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#features" class="nav-link">Características</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/acerca" class="nav-link">Acerca de</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/contacto" class="nav-link">Contacto</a>
+                </li>
+            </ul>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Notes Section -->
+    <section class="notes-section">
+        <div class="notes-container">
+            <div class="notes-header">
+                <h2 class="mb-0 text-primary"><i class="fas fa-sticky-note"></i> Registro de Notas</h2>
+                <p>Gestiona y organiza las notas de tus clientes de manera eficiente</p>
+            </div>
+            
+            <div class="notes-content">
+                <!-- Formulario de Notas -->
+                <div class="notes-form">
+                    <h3> 
+                       
+                        <i class="fas fa-plus-circle"></i> Nueva Nota</h3>
+                 
+
+                        <!-- <button class="btn btn-primary" onclick="return abrirModal('123')">Ver Cliente</button> -->
+
+                    <form id="notesForm">
+                        <div class="form-group">
+                            <label for="clientName">Nombre del Cliente *</label>
+                            <input type="text" id="clientName" name="clientName" required>
+                            <input type="hidden" id="clintId" name="clintId" value="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="clientPhone">Teléfono</label>
+                            <input type="tel" id="clientPhone" name="clientPhone">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="clientPhone">Tipo Dispositivo *</label>
+                            
+                            <div class="row">   
+                                <div class="col-4">   
+                                    <div class="card text-center">Movil</div>
+                                </div>
+                                <div class="col-4">   
+                                    <div class="card text-center">Tablet</div>
+                                </div>
+                                <div class="col-4">   
+                                    <div class="card text-center">Laptop</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="noteType">Tipo de Nota *</label>
+                            <select id="noteType" name="noteType" required>
+                                <option value="">Seleccionar tipo</option>
+                                <option value="consulta">Consulta</option>
+                                <option value="servicio">Servicio</option>
+                                <option value="follow-up">Seguimiento</option>
+                                <option value="venta">Venta</option>
+                                <option value="soporte">Soporte</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="noteContent">Contenido de la Nota *</label>
+                            <textarea id="noteContent" name="noteContent" placeholder="Describe los detalles de la interacción con el cliente..." required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="priority">Prioridad</label>
+                            <select id="priority" name="priority">
+                                <option value="normal">Normal</option>
+                                <option value="alta">Alta</option>
+                                <option value="urgente">Urgente</option>
+                            </select>
+                        </div>
+                        
+                        <button type="button" id="btnCancelarEdicion" class="btn btn-warning w-100 p-2 text-white">
+                            <i class="fa fa-remove"></i> Cancelar edición
+                        </button>
+
+                        <button type="submit" class="btn-save mt-3">
+                            <i class="fas fa-save"></i> Guardar Nota
+                        </button>
+
+                  
+                    </form>
+                </div>
+                
+                <!-- Lista de Notas -->
+                <div class="notes-list">
+                    <h3><i class="fas fa-list"></i> Notas Recientes</h3>
+                    <div id="notesList">
+                        <div class="empty-state">
+                            <i class="fas fa-sticky-note"></i>
+                            <p>No hay notas registradas aún</p>
+                            <p>Comienza agregando tu primera nota</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="clienteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-3 shadow">
+      <div class="modal-header">
+        <h5 class="modal-title">Detalle Nota</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div id="ticket" class="modal-body text-center" style="font-family: monospace; width: 250px;">
+        <h3 style="text-align: center;">TICKET DE COMPRA</h3>
+      <!--   <img *ngIf="qrCode" [src]="qrCode" alt="QR Code" class="img-fluid">
+        <p *ngIf="!qrCode">Generando QR...</p> -->
+        <img id="miImagen" alt="Imagen en base64" width="200">
+
+       <!--  <p><strong>ID:</strong> {{ cliente?.id }}</p> -->
+        <p class="mb-0"><strong>Nombre:</strong> <label  id="NombreDetalle" name="NombreDetalle"></label> </p>
+        <p class="mb-0"><strong>Telefono:</strong> <label  id="PhoneDetalle" name="PhoneDetalle"></label> </p>
+        <p class="mb-0"><strong>Contenido:</strong> <label  id="ContenidoDetalle" name="ContenidoDetalle"></label></p>
+      </div>
+      <div class="modal-footer">
+        <button onclick="return imprimirTicket()">🖨️ Imprimir Ticket</button>
+
+        <button type="button" class="btn btn-save" >Enviar por WhatsApp</button>
+
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-mobile-alt"></i> App Móvil</h3>
+                    <p>Revolucionando la tecnología móvil empresarial.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="/">Inicio</a></li>
+                        <li><a href="/notas.html">Notas de Clientes</a></li>
+                        <li><a href="#features">Características</a></li>
+                        <li><a href="#about">Acerca de</a></li>
+                        <li><a href="#contact">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Síguenos</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 App Móvil. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        var element = document.getElementById("btnCancelarEdicion");
+        element.addEventListener("click", myFunction);
+        function myFunction() {
+          
+            document.querySelector('input[name="clintId"]').value = 0;
+            document.querySelector('input[name="clientName"]').value = '';
+            document.querySelector('input[name="clientPhone"]').value = '';
+            var selectedOp = document.getElementById("noteType").value;
+            const selectElemento = document.getElementById('noteType');
+            selectElemento.selectedIndex = 0;
+        }
+
+
+        function imprimirTicket() {
+        const contenido = document.getElementById("ticket").innerHTML;
+        const ventana = window.open("", "PRINT", "width=300,height=600");
+        
+        ventana.document.write(`
+          <html>
+            <head>
+              <title>Ticket</title>
+              <style>
+                body { font-family: monospace; width: 80mm; font-size: 12px; }
+                h3 { text-align: center; }
+                hr { border: 1px dashed #000; }
+              </style>
+            </head>
+            <body>
+              ${contenido}
+            </body>
+          </html>
+        `);
+      
+        ventana.document.close();
+        ventana.focus();
+        ventana.print();   // Abre el cuadro de impresión
+        ventana.close();
+      }
+
+        
+
+       async function loadNotesQRFromAPI(folio) {
+                try {
+              
+                    var response = await fetch(`/api/notes/qr/${folio}`);
+                    var result = await response.json();
+             
+                   console.log("result: "+ JSON.stringify(result));
+                   if (result.success) {
+                    var data = result.data;
+             
+                    const imgElement = document.getElementById("miImagen");
+
+                    imgElement.src = data;
+                    console.log("esta ok: ");
+                   }else{
+                    console.log("fallo: ");
+                   }
+                } catch (error) {
+                    console.log('Error al generar el código QR:', error);
+                }
+
+            
+            }    
+
+            
+            
+  function abrirModal(string) {
+console.log("string:" + string);
+     // this.cliente = data;
+
+      // Mostrar modal con Bootstrap
+      const modal = new bootstrap.Modal(document.getElementById('clienteModal'));
+      modal.show();
+ 
+
+  }
+        
+        // Funcionalidad del formulario de notas
+        document.getElementById('notesForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+          
+            const formData = new FormData(this);
+            var clienteId = null;
+     
+            try {
+                clienteId = formData.get('clintId');
+              //  console.log("ClientId");
+            } catch (error) {
+                
+            }
+
+
+            const noteData = {
+                titulo: formData.get('clientName') || 'Nota sin título',
+                contenido: formData.get('noteContent'),
+                cliente: formData.get('clientName'),
+                clientPhone: formData.get('clientPhone'),
+                noteType: formData.get('noteType') || 'consulta'
+            };
+           
+            try {
+                // Llamar a la API para crear la nota en MySQL
+                var response = null;
+                var body = null;
+                if(clienteId == 0){
+                    console.log("POST::");
+                    response =      await fetch('/api/notes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(noteData)
+                    });
+                }else{
+                   // await fetch(`/api/notes/${id}`);
+                    response =      await fetch(`/api/notes/${clienteId}` , {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(noteData)
+                    });
+                }
+           
+               
+                const result = await response.json();
+                
+               
+                if (result.success) {
+                    var resuldInfo = result.data;
+   
+                    console.log("clientPhone::" + resuldInfo.clientPhone);
+                    document.querySelector('label[name="NombreDetalle"]').innerHTML = resuldInfo.cliente || '';
+                    document.querySelector('label[name="PhoneDetalle"]').innerHTML = resuldInfo.clientPhone || '';
+                    document.querySelector('label[name="ContenidoDetalle"]').innerHTML = resuldInfo.contenido || '';
+                    
+                    loadNotesQRFromAPI(resuldInfo.id);
+
+      // Mostrar modal con Bootstrap
+      const modal = new bootstrap.Modal(document.getElementById('clienteModal'));
+      modal.show();
+
+                    document.querySelector('input[name="clintId"]').value = 0;
+
+                    // Actualizar la lista de notas
+                    await loadNotesFromAPI();
+                    
+                    // Limpiar formulario
+                    this.reset();
+                    
+                    // Mostrar mensaje de éxito
+                    showNotification('Nota guardada exitosamente en la base de datos', 'success');
+                } else {
+                    showNotification('Error al guardar la nota: ' + result.message, 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Error de conexión al servidor', 'error');
+            }
+        });
+
+       
+        
+        // Función para cargar notas desde la API
+        async function loadNotesFromAPI() {
+            try {
+               
+                const response = await fetch('/api/notes');
+                const result = await response.json();
+                
+                if (result.success) {
+                    updateNotesList(result.data);
+                } else {
+                    console.error('Error al cargar notas:', result.message);
+                    showNotification('Error al cargar las notas', 'error');
+                }
+            } catch (error) {
+                console.error('Error de conexión:', error);
+                showNotification('Error de conexión al servidor', 'error');
+            }
+        }
+
+        // Función para actualizar la lista de notas
+        function updateNotesList(notes = null) {
+            const notesList = document.getElementById('notesList');
+            
+            if (!notes) {
+                // Si no se pasan notas, cargar desde localStorage como fallback
+                notes = JSON.parse(localStorage.getItem('clientNotes') || '[]');
+            }
+            
+            if (notes.length === 0) {
+                notesList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-sticky-note"></i>
+                        <p>No hay notas registradas aún</p>
+                        <p>Comienza agregando tu primera nota</p>
+                    </div>
+                `;
+                return;
+            }
+         
+
+            notesList.innerHTML = notes.map(note => `
+                <div class="note-item">
+                    <div class="note-header row">
+                        <div class="col-8"> <span class="note-client"> <strong> Cliente: </strong> ${note.cliente || 'Sin cliente'}</span>
+                              </div>
+
+                        <div class="col-4"> 
+                             <span class="note-date">${formatDate(note.fecha_creacion)}</span>
+                        </div>
+                       
+                       
+                    
+                        </div>
+
+                    <span class="note-type ${note.noteType || note.estado}">${getNoteTypeLabel(note.noteType || note.estado)}</span>
+                    <div class="note-content">
+                        <strong>Detalle Nota</strong><br>
+                        ${note.contenido}
+                        ${note.clientPhone ? `<div style="margin-top: 0.5rem; font-size: 0.875rem; color: #6b7280;"><i class="fas fa-phone"></i> ${note.clientPhone}</div>` : ''}
+                    </div>
+                    <div class="note-actions">
+                        <button onclick="editNote(${note.id})" class="btn-edit">Editar</button>
+                        <button onclick="deleteNote(${note.id})" class="btn-delete">Eliminar</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Función para formatear fecha
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-ES') + ' ' + date.toLocaleTimeString('es-ES');
+        }
+        
+        function getNoteTypeLabel(type) {
+            const labels = {
+                'activa': 'Activa',
+                'archivada': 'Archivada',
+                'eliminada': 'Eliminada',
+                'consulta': 'Consulta',
+                'servicio': 'Servicio',
+                'follow-up': 'Seguimiento',
+                'venta': 'Venta',
+                'soporte': 'Soporte'
+            };
+            return labels[type] || type;
+        }
+
+        // Función para editar nota
+        async function editNote(id) {
+            try {
+                console.log("editNote::"+id);
+                const response = await fetch(`/api/notes/${id}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const note = result.data;
+                    // Llenar el formulario con los datos de la nota
+                    document.querySelector('input[name="clientName"]').value = note.cliente || '';
+                    document.querySelector('textarea[name="noteContent"]').value = note.contenido || '';
+                    document.querySelector('input[name="clientPhone"]').value = note.clientPhone || '';
+                    document.querySelector('select[name="noteType"]').value = note.noteType || 'consulta';
+                    console.log("note: "+ JSON.stringify(note));
+                    
+                    document.querySelector('input[name="clintId"]').value = id || 0;
+                    
+                    // Scroll al formulario
+                    document.getElementById('notesForm').scrollIntoView({ behavior: 'smooth' });
+                    
+                    showNotification('Nota cargada para edición', 'success');
+                } else {
+                    showNotification('Error al cargar la nota', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Error de conexión', 'error');
+            }
+        }
+
+        // Función para eliminar nota
+        async function deleteNote(id) {
+            if (confirm('¿Estás seguro de que quieres eliminar esta nota?')) {
+                try {
+                    const response = await fetch(`/api/notes/${id}`, {
+                        method: 'DELETE'
+                    });
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        await loadNotesFromAPI();
+                        showNotification('Nota eliminada exitosamente', 'success');
+                    } else {
+                        showNotification('Error al eliminar la nota: ' + result.message, 'error');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showNotification('Error de conexión', 'error');
+                }
+            }
+        }
+
+        // Cargar notas al iniciar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            loadNotesFromAPI();
+        });
+        
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#10b981' : '#ef4444'};
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                z-index: 1000;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+        
+        // Cargar notas al iniciar la página
+        updateNotesList();
+    </script>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</html>

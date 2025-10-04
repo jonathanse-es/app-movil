@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acerca de - InnovacelApp</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .about-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .about-header h1 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+        }
+        
+        .about-content {
+            margin-bottom: 3rem;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        .hero-section h2 {
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+        
+        .hero-section p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .mission-vision {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .mission-card, .vision-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .mission-card h3, .vision-card h3 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .mission-card i, .vision-card i {
+            font-size: 3rem;
+            color: #2563eb;
+            margin-bottom: 1rem;
+        }
+        
+        .values-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+        
+        .values-section h3 {
+            color: #2563eb;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .value-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .value-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .value-item i {
+            font-size: 2.5rem;
+            color: #2563eb;
+            margin-bottom: 1rem;
+        }
+        
+        .value-item h4 {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .value-item p {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .team-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+        
+        .team-section h3 {
+            color: #2563eb;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .team-member {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+        
+        .team-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 3px solid #2563eb;
+        }
+        
+        .team-member h4 {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .team-member p {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .stats-section {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+        }
+        
+        .stats-section h3 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-item h4 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .stat-item p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .history-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+        
+        .history-section h3 {
+            color: #2563eb;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #2563eb;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -0.5rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: #2563eb;
+            border-radius: 50%;
+        }
+        
+        .timeline-item h4 {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-item p {
+            color: #6b7280;
+        }
+        
+        .cta-section {
+            background: #f0f9ff;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #2563eb;
+        }
+        
+        .cta-section h3 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .cta-section p {
+            color: #374151;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary, .btn-secondary {
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+        }
+        
+        .btn-secondary:hover {
+            background: #2563eb;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .mission-vision {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-container {
+                padding: 1rem;
+            }
+            
+            .hero-section h2 {
+                font-size: 2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2><i class="fas fa-mobile-alt"></i> InnovacelApp</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/notas" class="nav-link">Notas de Clientes</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#features" class="nav-link">Características</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/acerca" class="nav-link active">Acerca de</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/contacto" class="nav-link">Contacto</a>
+                </li>
+            </ul>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="about-container">
+            <div class="about-header">
+                <h1><i class="fas fa-info-circle"></i> Acerca de InnovacelApp</h1>
+                <p>Conoce nuestra historia, misión y el equipo que hace posible la innovación</p>
+            </div>
+            
+            <div class="about-content">
+                <!-- Hero Section -->
+                <div class="hero-section">
+                    <h2>Revolucionando la Tecnología Móvil Empresarial</h2>
+                    <p>InnovacelApp es una solución tecnológica innovadora diseñada para transformar la forma en que las empresas gestionan sus operaciones móviles. Nuestra plataforma combina la última tecnología con un diseño centrado en el usuario para ofrecer experiencias excepcionales.</p>
+                </div>
+                
+                <!-- Mission & Vision -->
+                <div class="mission-vision">
+                    <div class="mission-card">
+                        <i class="fas fa-bullseye"></i>
+                        <h3>Nuestra Misión</h3>
+                        <p>Empoderar a las empresas con herramientas tecnológicas avanzadas que simplifiquen sus operaciones móviles, mejoren la productividad y generen valor sostenible para sus clientes y stakeholders.</p>
+                    </div>
+                    <div class="vision-card">
+                        <i class="fas fa-eye"></i>
+                        <h3>Nuestra Visión</h3>
+                        <p>Ser la plataforma líder en soluciones móviles empresariales, reconocida por nuestra innovación constante, excelencia técnica y compromiso con el éxito de nuestros clientes.</p>
+                    </div>
+                </div>
+                
+                <!-- Values Section -->
+                <div class="values-section">
+                    <h3><i class="fas fa-heart"></i> Nuestros Valores</h3>
+                    <div class="values-grid">
+                        <div class="value-item">
+                            <i class="fas fa-lightbulb"></i>
+                            <h4>Innovación</h4>
+                            <p>Buscamos constantemente nuevas formas de mejorar y evolucionar nuestras soluciones tecnológicas.</p>
+                        </div>
+                        <div class="value-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <h4>Seguridad</h4>
+                            <p>Protegemos la información de nuestros clientes con los más altos estándares de seguridad.</p>
+                        </div>
+                        <div class="value-item">
+                            <i class="fas fa-users"></i>
+                            <h4>Colaboración</h4>
+                            <p>Trabajamos en equipo para lograr objetivos comunes y crear soluciones excepcionales.</p>
+                        </div>
+                        <div class="value-item">
+                            <i class="fas fa-star"></i>
+                            <h4>Excelencia</h4>
+                            <p>Nos esforzamos por superar las expectativas en cada proyecto y servicio que ofrecemos.</p>
+                        </div>
+                        <div class="value-item">
+                            <i class="fas fa-handshake"></i>
+                            <h4>Integridad</h4>
+                            <p>Actuamos con honestidad, transparencia y ética en todas nuestras relaciones comerciales.</p>
+                        </div>
+                        <div class="value-item">
+                            <i class="fas fa-rocket"></i>
+                            <h4>Agilidad</h4>
+                            <p>Respondemos rápidamente a las necesidades del mercado y de nuestros clientes.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stats Section -->
+                <div class="stats-section">
+                    <h3><i class="fas fa-chart-line"></i> Nuestros Logros</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <h4>10K+</h4>
+                            <p>Usuarios Activos</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>99.9%</h4>
+                            <p>Uptime</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>24/7</h4>
+                            <p>Soporte</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>50+</h4>
+                            <p>Empresas</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Section -->
+                <div class="team-section">
+                    <h3><i class="fas fa-users"></i> Nuestro Equipo</h3>
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <img src="https://via.placeholder.com/100x100/2563eb/ffffff?text=CEO" alt="CEO">
+                            <h4>María González</h4>
+                            <p>CEO & Fundadora</p>
+                        </div>
+                        <div class="team-member">
+                            <img src="https://via.placeholder.com/100x100/10b981/ffffff?text=CTO" alt="CTO">
+                            <h4>Carlos Rodríguez</h4>
+                            <p>CTO</p>
+                        </div>
+                        <div class="team-member">
+                            <img src="https://via.placeholder.com/100x100/f59e0b/ffffff?text=UX" alt="UX Designer">
+                            <h4>Ana Martínez</h4>
+                            <p>UX Designer</p>
+                        </div>
+                        <div class="team-member">
+                            <img src="https://via.placeholder.com/100x100/ef4444/ffffff?text=DEV" alt="Developer">
+                            <h4>Luis Herrera</h4>
+                            <p>Lead Developer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- History Section -->
+                <div class="history-section">
+                    <h3><i class="fas fa-history"></i> Nuestra Historia</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h4>2020 - Fundación</h4>
+                            <p>InnovacelApp fue fundada con la visión de revolucionar la tecnología móvil empresarial.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>2021 - Primer Producto</h4>
+                            <p>Lanzamos nuestra primera versión de la plataforma con funcionalidades básicas.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>2022 - Expansión</h4>
+                            <p>Ampliamos nuestro equipo y lanzamos nuevas características avanzadas.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>2023 - Reconocimiento</h4>
+                            <p>Recibimos el premio a la mejor innovación tecnológica del año.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>2024 - Crecimiento</h4>
+                            <p>Alcanzamos los 10,000 usuarios activos y seguimos creciendo.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Call to Action -->
+                <div class="cta-section">
+                    <h3><i class="fas fa-handshake"></i> ¿Listo para Innovar?</h3>
+                    <p>Únete a las empresas que ya están transformando sus operaciones con InnovacelApp</p>
+                    <div class="cta-buttons">
+                        <a href="/contacto" class="btn-primary">
+                            <i class="fas fa-envelope"></i> Contáctanos
+                        </a>
+                        <a href="/notas" class="btn-secondary">
+                            <i class="fas fa-sticky-note"></i> Ver Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-mobile-alt"></i> InnovacelApp</h3>
+                    <p>Revolucionando la tecnología móvil empresarial.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="/">Inicio</a></li>
+                        <li><a href="/notas">Notas de Clientes</a></li>
+                        <li><a href="#features">Características</a></li>
+                        <li><a href="/acerca">Acerca de</a></li>
+                        <li><a href="/contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Síguenos</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 InnovacelApp. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animación de entrada para los elementos
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observar elementos para animación
+        document.querySelectorAll('.mission-card, .vision-card, .value-item, .team-member, .stat-item, .timeline-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+        
+        // Animación de contadores
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-item h4');
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent.replace(/[^\d]/g, ''));
+                const increment = target / 100;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    
+                    if (counter.textContent.includes('K')) {
+                        counter.textContent = Math.floor(current) + 'K+';
+                    } else if (counter.textContent.includes('%')) {
+                        counter.textContent = current.toFixed(1) + '%';
+                    } else if (counter.textContent.includes('/')) {
+                        counter.textContent = '24/7';
+                    } else {
+                        counter.textContent = Math.floor(current) + '+';
+                    }
+                }, 20);
+            });
+        }
+        
+        // Iniciar animación de contadores cuando sean visibles
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        });
+        
+        const statsSection = document.querySelector('.stats-section');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+    </script>
+</body>
+</html>
+
